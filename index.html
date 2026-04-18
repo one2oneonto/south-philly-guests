@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to South Philly!</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #009246;
+    --gold: #CE2B37;
+    --cream: #f4faf6;
+    --rust: #a01020;
+    --light-gold: #fce8ea;
+    --mid: #007a3a;
+    --text: #1a1a1a;
+    --muted: #5a5a5a;
+    --card-bg: #ffffff;
+    --border: #c8e6d4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--green);
+    color: var(--cream);
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255,255,255,0.07) 20px,
+      rgba(255,255,255,0.07) 21px
+    );
+  }
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-address {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    letter-spacing: 0.04em;
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+    line-height: 1;
+  }
+  .hero-tagline {
+    font-size: 0.95rem;
+    color: rgba(245,240,232,0.75);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem; }
+
+  /* ── SECTION TITLES ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    margin-top: 2.5rem;
+  }
+  .section-header:first-child { margin-top: 0; }
+  .section-icon {
+    width: 42px; height: 42px;
+    background: var(--green);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.9rem;
+    letter-spacing: 0.05em;
+    color: var(--green);
+    line-height: 1;
+  }
+  .section-header p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  /* ── VENUE CARDS ── */
+  .venue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .venue-grid { grid-template-columns: 1fr; } }
+
+  .venue-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+  .venue-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+  .venue-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    margin-bottom: 0.6rem;
+  }
+  .tag-venue { background: #e6f4ec; color: var(--green); }
+  .tag-bar { background: #fdf0e0; color: #8a5a00; }
+  .tag-food { background: #fde8e8; color: var(--rust); }
+  .tag-transit { background: #e8eef8; color: #2a4a8a; }
+  .venue-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.6rem; }
+
+  .venue-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+    color: var(--green);
+  }
+  .venue-card h3 a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--gold);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .venue-card h3 a:hover {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+  .venue-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: var(--cream);
+    padding: 0.2rem 0.55rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+  .meta-pill strong { color: var(--text); font-weight: 600; }
+  .venue-desc { font-size: 0.875rem; color: #4a4a4a; line-height: 1.5; }
+
+  /* ── HIGHLIGHT CARD ── */
+  .highlight-card {
+    background: var(--green);
+    color: var(--cream);
+    border-radius: 14px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.25rem;
+    border-left: 5px solid var(--gold);
+  }
+  .highlight-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .highlight-card p { font-size: 0.9rem; color: rgba(245,240,232,0.88); line-height: 1.6; }
+
+  /* ── TRANSIT SECTION ── */
+  .transit-line {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 1rem;
+    margin-bottom: 0;
+  }
+  .station-row {
+    display: contents;
+  }
+  .station-dot-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .station-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 3px solid #F7941D;
+    background: var(--cream);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .station-dot.nrg {
+    background: #F7941D;
+    width: 18px; height: 18px;
+    border-color: #c0700a;
+  }
+  .station-line {
+    width: 3px;
+    background: #F7941D;
+    flex: 1;
+    min-height: 20px;
+  }
+  .station-info {
+    padding-bottom: 1.25rem;
+  }
+  .station-info h4 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+  .station-info p { font-size: 0.82rem; color: var(--muted); }
+  .station-info .places { margin-top: 0.3rem; }
+  .place-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    background: var(--light-gold);
+    color: #7a5000;
+    padding: 0.15rem 0.5rem;
+    border-radius: 12px;
+    margin: 0.1rem 0.15rem 0.1rem 0;
+    font-weight: 500;
+  }
+
+  /* ── PRO TIPS ── */
+  .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .tips-grid { grid-template-columns: 1fr; } }
+  .tip-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+  }
+  .tip-card .tip-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+  .tip-card h4 {
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--green);
+    margin-bottom: 0.3rem;
+  }
+  .tip-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  .guide-footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .guide-footer strong { color: var(--green); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 2rem 0;
+  }
+
+  /* TEAM INSIGNIA */
+  .team-insignia {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.35rem;
+    align-items: center;
+  }
+  .insignia-badge {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.2rem;
+    width: 36px;
+    height: 36px;
+    cursor: default;
+  }
+  .insignia-badge img {
+    display: block;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+  .insignia-badge::after {
+    content: attr(data-team);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    right: 0;
+    background: var(--green);
+    color: var(--cream);
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 0.25rem 0.5rem;
+    border-radius: 5px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .insignia-badge:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── EXPLORE LINKS ── */
+  .explore-link {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #0054A6;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    margin-top: 0.2rem;
+  }
+  .explore-link:hover { text-decoration: underline; }
+
+  /* ── NEIGHBORHOOD CARD ── */
+  .neighborhood-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .neighborhood-card .nbhd-icon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 0.1rem;
+  }
+  .neighborhood-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--green);
+    margin-bottom: 0.3rem;
+  }
+  .neighborhood-card p {
+    font-size: 0.85rem;
+    color: #4a4a4a;
+    line-height: 1.55;
+    margin-bottom: 0.5rem;
+  }
+  .neighborhood-card .nbhd-link {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--green);
+    background: var(--light-gold);
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    text-decoration: none;
+  }
+  .neighborhood-card .nbhd-link:hover { background: var(--gold); color: #fff; }
+
+  .closest-note {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #F7941D;
+    text-decoration: none;
+    border-bottom: 1px dotted #F7941D;
+    white-space: nowrap;
+  }
+  .closest-note:hover { color: #c0700a; }
+  .station-info { transition: opacity 0.2s; }
+
+  /* ── AIRBNB LINKS ── */
+  .airbnb-hero-link {
+    display: inline-flex;
+    align-items: center;
+    background: #FF5A5F;
+    color: #ffffff;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    transition: filter 0.2s, box-shadow 0.2s;
+  }
+  .airbnb-hero-link:hover { filter: brightness(1.1); box-shadow: 0 4px 18px rgba(0,0,0,0.28); }
+  .airbnb-hero-link img { height: 52px; display: block; flex-shrink: 0; }
+  .airbnb-cta { padding: 0 1.1rem 0 0.75rem; white-space: nowrap; letter-spacing: 0.01em; }
+  .airbnb-footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #FF5A5F;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff8f8;
+    border: 1px solid #ffd0d2;
+    padding-right: 0.75rem;
+    transition: background 0.2s;
+  }
+  .airbnb-footer-link img { height: 28px; display: block; flex-shrink: 0; }
+  .airbnb-footer-link:hover { background: #ffe8e9; }
+
+  /* PRINT */
+  @media print {
+    .hero { padding: 1.5rem; }
+    .venue-card:hover { box-shadow: none; }
+    body { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-address">2833 S 10th Street · Philadelphia, PA 19148</div>
+  <div class="hero-eyebrow">Guest Neighborhood Guide</div>
+  <div style="display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:center; margin-top:1.25rem; position:relative; z-index:1;">
+    <a href="https://www.airbnb.com/rooms/1527009001177937517?photo_id=2535643103&source_impression_id=p3_1776138610_P3RLh50rd0RdgzbP&previous_page_section_name=1000" target="_blank" class="airbnb-hero-link">
+      <img src="logos/airbnb-logo.jpg" alt="Airbnb">
+      <span class="airbnb-cta">See listing</span>
+    </a>
+    <a href="https://docs.google.com/document/d/e/2PACX-1vS8JWJ5O9zNCvYuBJbUb0GvfRmsfggaymtjSGaTjvOJeJlkR9SJqgub0dBYZCb-y4l6CaOMuwwWKLCn/pub" target="_blank" class="airbnb-hero-link" style="background:#1a1a1a;">
+      <span class="airbnb-cta" style="padding: 0 1.1rem;">📋 A Guide to Your Stay</span>
+    </a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- VENUES -->
+  <div class="section-header">
+    <div class="section-icon" style="padding:0; overflow:hidden;">
+      <a href="https://scssd.org/" target="_blank">
+        <img src="logos/scssd.jpg" alt="South Philly Sports Complex" style="width:42px; height:42px; object-fit:cover; display:block;">
+      </a>
+    </div>
+    <div>
+      <h2>South Philly Sports Complex</h2>
+    </div>
+  </div>
+
+  <div class="venue-grid">
+
+    <div class="venue-card">
+      <div class="team-insignia">
+        <a class="insignia-badge" data-team="Live! Casino &amp; Hotel" href="https://www.livech.com/philadelphia" target="_blank">
+          <img src="logos/Live_Casino_Hotel_Philadelphia_logo.png" alt="Live! Casino &amp; Hotel Philadelphia">
+        </a>
+      </div>
+      <h3><a href="https://www.google.com/maps/dir/?api=1&origin=2833+S+10th+St+Philadelphia+PA+19148&destination=900+Packer+Ave+Philadelphia+PA+19148&travelmode=walking" target="_blank">Live! Casino &amp; Hotel Philadelphia</a></h3>
+      <span class="venue-tag tag-venue">Casino &amp; Hotel</span>
+      <div class="venue-meta" style="margin-top:0.5rem;">
+        <span class="meta-pill">🚶 <strong>10–15 min</strong> walk</span>
+        <span class="meta-pill">📍 <strong>0.4 mi</strong></span>
+      </div>
+    </div>
+
+    <div class="venue-card">
+      <div class="team-insignia">
+        <a class="insignia-badge" data-team="Philadelphia Phillies" href="https://www.mlb.com/phillies" target="_blank">
+          <img src="logos/Philadelphia_Phillies_(2019)_logo.svg" alt="Philadelphia Phillies">
+        </a>
+      </div>
+      <h3><a href="https://www.google.com/maps/dir/?api=1&origin=2833+S+10th+St+Philadelphia+PA+19148&destination=1+Citizens+Bank+Way+Philadelphia+PA+19148&travelmode=walking" target="_blank">Citizens Bank Park</a></h3>
+      <span class="venue-tag tag-venue">Baseball</span>
+      <div class="venue-meta" style="margin-top:0.5rem;">
+        <span class="meta-pill">🚶 <strong>15–20 min</strong> walk</span>
+        <span class="meta-pill">📍 <strong>0.6 mi</strong></span>
+      </div>
+    </div>
+
+    <div class="venue-card">
+      <div class="team-insignia">
+        <a class="insignia-badge" data-team="Philadelphia 76ers" href="https://www.nba.com/sixers" target="_blank">
+          <img src="logos/Philadelphia_76ers_Logo.svg" alt="Philadelphia 76ers">
+        </a>
+        <a class="insignia-badge" data-team="Philadelphia Flyers" href="https://www.nhl.com/flyers" target="_blank">
+          <img src="logos/Philadelphia_Flyers_logo.svg" alt="Philadelphia Flyers">
+        </a>
+      </div>
+      <h3><a href="https://www.google.com/maps/dir/?api=1&origin=2833+S+10th+St+Philadelphia+PA+19148&destination=3601+S+Broad+St+Philadelphia+PA+19148&travelmode=walking" target="_blank">Xfinity Mobile Arena</a></h3>
+      <div class="venue-tags">
+        <span class="venue-tag tag-venue">Basketball</span>
+        <span class="venue-tag tag-venue">Hockey</span>
+        <span class="venue-tag tag-venue">Concerts &amp; Events</span>
+      </div>
+      <div class="venue-meta">
+        <span class="meta-pill">🚶 <strong>25–30 min</strong> walk</span>
+        <span class="meta-pill">📍 <strong>1.1 mi</strong></span>
+      </div>
+    </div>
+
+    <div class="venue-card">
+      <div class="team-insignia">
+        <a class="insignia-badge" data-team="Philadelphia Eagles" href="https://www.nfl.com/teams/philadelphia-eagles/" target="_blank">
+          <img src="logos/Philadelphia_Eagles_logo.svg" alt="Philadelphia Eagles">
+        </a>
+      </div>
+      <h3><a href="https://www.google.com/maps/dir/?api=1&origin=2833+S+10th+St+Philadelphia+PA+19148&destination=1+Lincoln+Financial+Field+Way+Philadelphia+PA+19148&travelmode=walking" target="_blank">Lincoln Financial Field</a></h3>
+      <span class="venue-tag tag-venue">Football</span>
+      <div class="venue-meta" style="margin-top:0.5rem;">
+        <span class="meta-pill">🚶 <strong>20–25 min</strong> walk</span>
+        <span class="meta-pill">📍 <strong>0.9 mi</strong></span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- VISIT PHILADELPHIA -->
+  <div class="section-header">
+    <div class="section-icon" style="padding:0; overflow:hidden; background:none;">
+      <img src="logos/LOVE_(1967).jpg" alt="LOVE" style="width:42px; height:42px; object-fit:cover; display:block; border-radius:10px;">
+    </div>
+    <div>
+      <h2>Visit Philadelphia</h2>
+      <p>Official tourism resources for the city and this neighborhood.</p>
+    </div>
+  </div>
+
+  <div class="venue-grid">
+
+    <div class="venue-card">
+      <h3><a href="https://www.visitphilly.com/" target="_blank">Visit Philadelphia</a></h3>
+      <span class="venue-tag tag-venue">Official City Guide</span>
+      <div class="venue-meta" style="margin-top:0.5rem;"></div>
+      <p class="venue-desc">Philadelphia's official tourism resource. Events, attractions, restaurants, and neighborhoods across the entire city.</p>
+    </div>
+
+    <div class="venue-card">
+      <h3><a href="https://www.visitphilly.com/areas/south-philadelphia-sports-complex/" target="_blank">South Philly Sports Complex</a></h3>
+      <span class="venue-tag tag-venue">This Neighborhood</span>
+      <div class="venue-meta" style="margin-top:0.5rem;"></div>
+      <p class="venue-desc">VisitPhilly's dedicated guide to the South Philly Sports Complex Neighborhood and surrounding area. This includes information on event listings, parking, getting here by transit, and what's nearby.</p>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BROAD STREET LINE -->
+  <div class="section-header">
+    <div class="section-icon" style="background:#0054A6; padding: 0.4rem;">
+      <a href="https://www.septa.org" target="_blank">
+        <img src="logos/SEPTA_logo.svg" alt="SEPTA" style="width:32px; height:32px; display:block;">
+      </a>
+    </div>
+    <div>
+      <h2>Broad Street Line</h2>
+      <p>Stations below run south toward the Sports Complex, and City Hall connects to the full network. <a href="https://www.septa.org/schedules/subway/bs.html" target="_blank" style="color:#0054A6; font-weight:600; text-decoration:none;">View the full Broad Street Line map.</a></p>
+    </div>
+  </div>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem;">
+    <div class="transit-line">
+
+      <div class="station-dot-col">
+        <div class="station-dot nrg"></div>
+        <div class="station-line"></div>
+      </div>
+      <div class="station-info">
+        <h4>City Hall</h4>
+        <p>Transfer to Market-Frankford Line for east-west travel. Rittenhouse Square is a short walk west.</p>
+        <a class="explore-link" href="https://www.google.com/maps/search/restaurants+bars+near+City+Hall+Philadelphia+PA" target="_blank">🗺 Explore nearby →</a>
+      </div>
+
+      <div class="station-dot-col">
+        <div class="station-dot"></div>
+        <div class="station-line"></div>
+      </div>
+      <div class="station-info">
+        <h4>Walnut–Locust</h4>
+        <a class="explore-link" href="https://www.google.com/maps/search/restaurants+bars+Walnut+Street+Philadelphia+PA" target="_blank">🗺 Explore nearby →</a>
+      </div>
+
+      <div class="station-dot-col">
+        <div class="station-dot"></div>
+        <div class="station-line"></div>
+      </div>
+      <div class="station-info">
+        <h4>Lombard–South</h4>
+        <a class="explore-link" href="https://www.google.com/maps/search/restaurants+bars+South+Street+Philadelphia+PA" target="_blank">🗺 Explore nearby →</a>
+      </div>
+
+      <div class="station-dot-col">
+        <div class="station-dot"></div>
+        <div class="station-line"></div>
+      </div>
+      <div class="station-info">
+        <h4>Ellsworth–Federal</h4>
+        <a class="explore-link" href="https://www.google.com/maps/search/restaurants+bars+East+Passyunk+Avenue+Philadelphia+PA" target="_blank">🗺 Explore nearby →</a>
+      </div>
+
+      <div class="station-dot-col">
+        <div class="station-dot"></div>
+        <div class="station-line"></div>
+      </div>
+      <div class="station-info">
+        <h4>Tasker–Morris</h4>
+        <p>Exit for East Passyunk Ave restaurants.</p>
+        <a class="explore-link" href="https://www.google.com/maps/search/restaurants+bars+East+Passyunk+Avenue+Philadelphia+PA" target="_blank">🗺 Explore nearby →</a>
+      </div>
+
+      <div class="station-dot-col">
+        <div class="station-dot"></div>
+        <div class="station-line"></div>
+      </div>
+      <div class="station-info">
+        <h4>Snyder Ave</h4>
+        <p>Also serves East Passyunk Ave restaurants.</p>
+        <a class="explore-link" href="https://www.google.com/maps/search/restaurants+bars+East+Passyunk+Avenue+Philadelphia+PA" target="_blank">🗺 Explore nearby →</a>
+      </div>
+
+      <div class="station-dot-col">
+        <div class="station-dot"></div>
+        <div class="station-line"></div>
+      </div>
+      <div class="station-info">
+        <h4>Oregon Ave</h4>
+        <p><a href="https://www.google.com/maps/dir/?api=1&origin=2833+S+10th+St+Philadelphia+PA+19148&destination=Oregon+Ave+Station+Philadelphia+PA&travelmode=walking" target="_blank" class="closest-note">Closest station to where you're staying.</a></p>
+        <a class="explore-link" href="https://www.google.com/maps/search/restaurants+bars+Oregon+Avenue+Philadelphia+PA" target="_blank">🗺 Explore nearby →</a>
+      </div>
+
+      <div class="station-dot-col">
+        <div class="station-dot nrg"></div>
+        <div class="station-line" style="min-height:0; flex:0;"></div>
+      </div>
+      <div class="station-info" style="padding-bottom: 0;">
+        <h4><img src="logos/NRG_Energy_logo.svg" alt="NRG" style="height:2.4rem; vertical-align:middle; margin-right:0.3em;"></h4>
+        <p>NRG Station is inside the Sports Complex.</p>
+        <a class="explore-link" href="https://www.google.com/maps/search/restaurants+bars+near+NRG+Station+Philadelphia+PA" target="_blank">🗺 Explore nearby →</a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="guide-footer">
+  <strong>2833 S 10th Street · Philadelphia, PA 19148</strong><br>
+  All walking times are approximate.<br>
+  <div style="display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center; margin-top:0.6rem;">
+    <a href="https://www.airbnb.com/rooms/1527009001177937517?photo_id=2535643103&source_impression_id=p3_1776138610_P3RLh50rd0RdgzbP&previous_page_section_name=1000" target="_blank" class="airbnb-footer-link">
+      <img src="logos/airbnb-logo.jpg" alt="Airbnb">
+      See listing
+    </a>
+    <a href="https://docs.google.com/document/d/e/2PACX-1vS8JWJ5O9zNCvYuBJbUb0GvfRmsfggaymtjSGaTjvOJeJlkR9SJqgub0dBYZCb-y4l6CaOMuwwWKLCn/pub" target="_blank" class="airbnb-footer-link" style="background:#f5f5f5; border-color:#ddd; color:#1a1a1a; padding-left:0.75rem;">
+      📋 A Guide to Your Stay
+    </a>
+  </div>
+</div>
+
+</body>
+</html>
